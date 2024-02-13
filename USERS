@@ -1,0 +1,450 @@
+{
+	"info": {
+		"_postman_id": "c7a3e845-9061-46a8-b79b-15bea8c89f52",
+		"name": "4.Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32554034"
+	},
+	"item": [
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"verification gender type exist\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"male\");\r",
+							"});\r",
+							"pm.test(\"Check the city of user with id 1\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[0].address.city).to.eql(\"Washington\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get current auth user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJuYW1lIjoia21pbmNoZWxsZSIsImVtYWlsIjoia21pbmNoZWxsZUBxcS5jb20iLCJmaXJzdE5hbWUiOiJKZWFubmUiLCJsYXN0TmFtZSI6IkhhbHZvcnNvbiIsImdlbmRlciI6ImZlbWFsZSIsImltYWdlIjoiaHR0cHM6Ly9yb2JvaGFzaC5vcmcvSmVhbm5lLnBuZz9zZXQ9c2V0NCIsImlhdCI6MTcwNzg0ODA5MSwiZXhwIjoxNzA3ODUxNjkxfQ.OkIGhmcbchjcHU6ca5Bjjwaz7TTnqLqxntVG0VoO_-Q"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}/me"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"Check the user first name \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstName).to.eql(\"Terry\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Search users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"validate the first name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[0].firstName).to.eql(\"Johnathon\");\r",
+							"});\r",
+							"pm.test(\"check the age of user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[0].age).to.eql(18);\r",
+							"});\r",
+							"pm.test(\"check company adress of user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[0].company.address.address).to.eql(\"172 Alburg Springs Road\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}{{RessourceUser}}/search?q=John",
+					"host": [
+						"{{BaseUrl}}{{RessourceUser}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "John"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filter users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check existing of brown\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Brown\");\r",
+							"});\r",
+							"pm.test(\"check an example of user with hair color brown\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[5].hair.color).to.eql(\"Brown\");\r",
+							"});\r",
+							"pm.test(\"check the total of users with hair color brown\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.total).to.eql(26);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}{{RessourceUser}}/filter?key=hair.color&value=Brown",
+					"host": [
+						"{{BaseUrl}}{{RessourceUser}}"
+					],
+					"path": [
+						"filter"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "hair.color"
+						},
+						{
+							"key": "value",
+							"value": "Brown"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit and skip users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check request response structure\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.eql).to.eql(pm.globals.get(\"ExpectedResult-Users\").json);\r",
+							"   \r",
+							"});\r",
+							"pm.test(\"check val limit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.limit).to.eql(5);\r",
+							"});\r",
+							"pm.test(\"check val skip\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.skip).to.eql(10);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.users[2].id).to.eql(13);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"/*pm.globals.set(\"ExpectedResult-Users\", ({\r",
+							"    \"users\": [\r",
+							"        {\r",
+							"            \"id\": 11,\r",
+							"            \"firstName\": \"Marcel\",\r",
+							"            \"age\": 39\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 12,\r",
+							"            \"firstName\": \"Assunta\",\r",
+							"            \"age\": 42\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 13,\r",
+							"            \"firstName\": \"Trace\",\r",
+							"            \"age\": 26\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 14,\r",
+							"            \"firstName\": \"Enoch\",\r",
+							"            \"age\": 21\r",
+							"        },\r",
+							"        {\r",
+							"            \"id\": 15,\r",
+							"            \"firstName\": \"Jeanne\",\r",
+							"            \"age\": 26\r",
+							"        }\r",
+							"    ],\r",
+							"    \"total\": 100,\r",
+							"    \"skip\": 10,\r",
+							"    \"limit\": 5\r",
+							"}));*/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}{{RessourceUser}}?limit=5&skip=10&select=firstName,age",
+					"host": [
+						"{{BaseUrl}}{{RessourceUser}}"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "5"
+						},
+						{
+							"key": "skip",
+							"value": "10"
+						},
+						{
+							"key": "select",
+							"value": "firstName,age"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user's carts by user id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}/5/carts"
+			},
+			"response": []
+		},
+		{
+			"name": "Get user's posts by user id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the total of posts\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.total).to.eql(3);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}/5/posts"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the first name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstName).to.eql(\"Muhammad\");\r",
+							"});\r",
+							"pm.test(\"check the last name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastName).to.eql(\"Ovi\");\r",
+							"});\r",
+							"pm.test(\"check the age \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.age).to.eql(250);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Muhammad\",\r\n    \"lastName\": \"Ovi\",\r\n    \"age\": 250\r\n    /* other user data */\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}{{RessourceUser}}/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check the id of updated user\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(1);\r",
+							"});\r",
+							"pm.test(\"check the last name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastName).to.eql(\"Owais\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastName\": \"Owais\"\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}{{RessourceUser}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"check isDeleted is true \", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "{{BaseUrl}}{{RessourceUser}}/1"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"check status code\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"pm.test(\"check Successful POST request\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([201,200, 202]);",
+					"});",
+					"pm.test(\"Status code name has string\", function () {",
+					"    pm.response.to.have.status(\"OK\");",
+					"});",
+					"pm.test(\"Check the Response time is less than 1500ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+					"});",
+					"pm.test(\"Content-Type and date are present\", function () {",
+					"    pm.response.to.have.header(\"Content-Type\");",
+					"    pm.response.to.have.header(\"date\");",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RessourceUser",
+			"value": "/users"
+		}
+	]
+}

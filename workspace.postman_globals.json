@@ -1,0 +1,66 @@
+{
+	"id": "68668eb3-0e86-43da-8b4c-2811a308f5ee",
+	"values": [
+		{
+			"key": "Accept",
+			"value": "*/*",
+			"enabled": true
+		},
+		{
+			"key": "Accept-Encoding",
+			"value": "gzip, deflate, br",
+			"enabled": true
+		},
+		{
+			"key": "Connection",
+			"value": "keep-alive",
+			"enabled": true
+		},
+		{
+			"key": "ExpectedResult",
+			"value": "{\n    \"id\": 1,\n    \"title\": \"iPhone 9\",\n    \"description\": \"An apple mobile which is nothing like apple\",\n    \"price\": 549,\n    \"discountPercentage\": 12.96,\n    \"rating\": 4.69,\n    \"stock\": 94,\n    \"brand\": \"Apple\",\n    \"category\": \"smartphones\",\n    \"thumbnail\": \"https://cdn.dummyjson.com/product-images/1/thumbnail.jpg\",\n    \"images\": [\n        \"https://cdn.dummyjson.com/product-images/1/1.jpg\",\n        \"https://cdn.dummyjson.com/product-images/1/2.jpg\",\n        \"https://cdn.dummyjson.com/product-images/1/3.jpg\",\n        \"https://cdn.dummyjson.com/product-images/1/4.jpg\",\n        \"https://cdn.dummyjson.com/product-images/1/thumbnail.jpg\"\n    ]\n}",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "Limit",
+			"value": "10",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "Size",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "ExpectedResult-Users",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "variable_key",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "ExpectedResult_Sg_Post",
+			"value": "",
+			"type": "any",
+			"enabled": false
+		},
+		{
+			"key": "ExpectedResult_Sg_Post",
+			"value": "{\n    \"id\": 1,\n    \"title\": \"His mother had always taught him\",\n    \"body\": \"His mother had always taught him not to ever think of himself as better than others. He'd tried to live by this motto. He never looked down on those who were less fortunate or who had less money than him. But the stupidity of the group of people he was talking to made him change his mind.\",\n    \"userId\": 9,\n    \"tags\": [\n        \"history\",\n        \"american\",\n        \"crime\"\n    ],\n    \"reactions\": 2\n}",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"name": "Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2024-02-13T22:26:19.207Z",
+	"_postman_exported_using": "Postman/10.23.0"
+}

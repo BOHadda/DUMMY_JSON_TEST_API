@@ -1,0 +1,631 @@
+{
+	"info": {
+		"_postman_id": "75d27216-52f0-41e2-9247-3211b4047c1c",
+		"name": "2.Products",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "32554034"
+	},
+	"item": [
+		{
+			"name": "Get all products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de la presence de la chaine iPhone 9 et d'Apple\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"iPhone 9\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"Apple\");\r",
+							"});\r",
+							"pm.test(\"Verification de stock de iPhone 9\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[0].stock).to.eql(94);\r",
+							"});\r",
+							"pm.test(\"Verification de titre de produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[6].title).to.eql(\"Samsung Galaxy Book\");\r",
+							"});\r",
+							"pm.test(\"Verification de la marque de ce produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[6].brand).to.eql(\"Samsung\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connexion",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": "{{BaseUrl}}{{RessourcePr}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de la presence de la chaine An apple mobile which is nothing like apple\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"An apple mobile which is nothing like apple\");\r",
+							"});\r",
+							"pm.test(\"Verification de la categorie de ce produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.category).to.eql(\"smartphones\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Your test name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.eql(pm.globals.get(\"ExpectedResult\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"ExpectedResult\", ({\r",
+							"    \"id\": 1,\r",
+							"    \"title\": \"iPhone 9\",\r",
+							"    \"description\": \"An apple mobile which is nothing like apple\",\r",
+							"    \"price\": 549,\r",
+							"    \"discountPercentage\": 12.96,\r",
+							"    \"rating\": 4.69,\r",
+							"    \"stock\": 94,\r",
+							"    \"brand\": \"Apple\",\r",
+							"    \"category\": \"smartphones\",\r",
+							"    \"thumbnail\": \"https://cdn.dummyjson.com/product-images/1/thumbnail.jpg\",\r",
+							"    \"images\": [\r",
+							"        \"https://cdn.dummyjson.com/product-images/1/1.jpg\",\r",
+							"        \"https://cdn.dummyjson.com/product-images/1/2.jpg\",\r",
+							"        \"https://cdn.dummyjson.com/product-images/1/3.jpg\",\r",
+							"        \"https://cdn.dummyjson.com/product-images/1/4.jpg\",\r",
+							"        \"https://cdn.dummyjson.com/product-images/1/thumbnail.jpg\"\r",
+							"    ]\r",
+							"}));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"connection": true,
+					"accept-encoding": true,
+					"accept": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": "{{BaseUrl}}{{RessourcePr}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Search products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de la présence de la chaine Women Shoulder Bags \", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Women Shoulder Bags\");\r",
+							"});\r",
+							"pm.test(\"Verification de la marque de produit avec id 71 \", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[2].brand).to.eql(\"LouisWill\");\r",
+							"});\r",
+							"pm.test(\"Verification de categorie du produit qui a un id 71\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[2].category).to.eql(\"womens-bags\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}{{RessourcePr}}/search?q=phone",
+					"host": [
+						"{{BaseUrl}}{{RessourcePr}}"
+					],
+					"path": [
+						"search"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "phone"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Limit and skip products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"verification du total\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.total).to.eql(100);\r",
+							"});\r",
+							"pm.test(\"verification de price\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[1].price).to.eql(40);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"verification de title\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[4].title).to.eql(\"Eau De Perfume Spray\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"Size\", 20);\r",
+							"console.info(\"La valeur initiale de limit est : \", pm.globals.get(\"Limit\"));\r",
+							"//console.clear;\r",
+							"console.info(\"La valeur de size est : \", pm.globals.get(\"Size\"));\r",
+							"pm.globals.set(\"Limit\", pm.globals.get(\"Size\"));\r",
+							"console.info(\"La valeure finale de Limit est : \" , pm.globals.get(\"Limit\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{BaseUrl}}{{RessourcePr}}?skip=10&select=title,price,description&limit={{Limit}}",
+					"host": [
+						"{{BaseUrl}}{{RessourcePr}}"
+					],
+					"query": [
+						{
+							"key": "skip",
+							"value": "10"
+						},
+						{
+							"key": "select",
+							"value": "title,price,description"
+						},
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "limit",
+							"value": "{{Limit}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all products categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de la présence de categorie skincare et womens-shoes\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"skincare\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"womens-shoes\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connexion",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": "{{BaseUrl}}{{RessourcePr}}/categories"
+			},
+			"response": []
+		},
+		{
+			"name": "Get products of a category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de la presence de categorie smartphones\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"smartphones\");\r",
+							"});\r",
+							"pm.test(\"Verification de prix de produit avec id 5\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[4].price).to.eql(499);\r",
+							"});\r",
+							"pm.test(\"Verification de la marque de ce produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.products[4].brand).to.eql(\"Huawei\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connexion",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": "{{BaseUrl}}{{RessourcePr}}/category/smartphones"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a new product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de l'insertion du nouveau titre du produit\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"BMW Pencil\");\r",
+							"});\r",
+							"pm.test(\"Verification de prix de ce produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.price).to.eql(250);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response body structure is valid\", function () {\r",
+							"   \r",
+							"    var Reponse = pm.response.json();\r",
+							"    var requestBody = request.data;\r",
+							"    requestBody = JSON.parse(requestBody);\r",
+							"   \r",
+							"    pm.expect(Reponse).to.eql(requestBody);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connexion",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 101,\r\n    \"title\": \"BMW Pencil\",\r\n    \"price\": 250\r\n    /* other product data */\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}{{RessourcePr}}/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Update a product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de mise à jour du titre du produit avec id 1\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"iPhone Galaxy +1\");\r",
+							"});\r",
+							"pm.test(\"Verification du stock de ce produit\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.stock).to.eql(94);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"iPhone Galaxy +1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{BaseUrl}}{{RessourcePr}}/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Verification de supression du produit avec id 1\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"true\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept": true,
+					"accept-encoding": true,
+					"connection": true
+				}
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "{{Accept}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "{{Accept-Encoding}}",
+						"type": "text"
+					},
+					{
+						"key": "Connection",
+						"value": "{{Connection}}",
+						"type": "text"
+					}
+				],
+				"url": "{{BaseUrl}}{{RessourcePr}}/1"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Verification du status code=200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});",
+					"",
+					"pm.test(\"Response time is less than 1500ms\", function () {",
+					"    pm.expect(pm.response.responseTime).to.be.below(1500);",
+					"});",
+					"",
+					"pm.test(\"Content-Type and date are present\", function () {",
+					"    pm.response.to.have.header(\"Content-Type\");",
+					"    pm.response.to.have.header(\"date\");",
+					"});",
+					"",
+					"pm.test(\"Status code name has OK\", function () {",
+					"    pm.response.to.have.status(\"OK\");",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "RessourcePr",
+			"value": "/products"
+		}
+	]
+}
